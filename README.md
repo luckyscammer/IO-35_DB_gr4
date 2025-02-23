@@ -1,69 +1,35 @@
+# Репозиторій для виконання лабораторних робіт з дисципліни "Організація баз даних"
 
-# Шаблон репозиторію для виконання лабораторних робіт з дисципліни "Організація баз даних"
+## Тема
 
-## Як використовувати
+Система управління проектами
 
-В цьому репозиторії знаходиться шаблон для виконання лабораторних робіт.
+## Автори
 
-Для виконання лабораторних робіт необхідно зробити ```fork``` цього репозіторію, склонувати вже власний репозіторій та розміщувати документацію у відповідних діректоріях ```./docs```.
+_студент 2-го курсу, групи ІО-35_ **Олександр СТЕПАНОВ** [Telegram](https://t.me/Pliffdax)
 
-В цьому файлі необхідно вказати тему лабораторних робіт (назву проекту). Коротку загальну характеристику
-проекту, контактні дані виконавця, посилання на репо співвиконавців (за необхідністю).
+_студент 2-го курсу, групи ІО-35_ **Олександр СЛЮСАР** [Telegram](https://t.me/a_x_o_l_o_t_l)
 
+_студент 2-го курсу, групи ІО-35_ **Андрій САВЧЕНКО** [Telegram](https://t.me/yescheers)
 
-Шаблон публікування підготовлено з використанням [VuePress](https://vuepress.vuejs.org/), та стартера 
-[FriendlyUser/vuepress-theme-cool-starter](https://github.com/FriendlyUser/vuepress-theme-cool-starter).
+_студент 2-го курсу, групи ІО-35_ **Станіслав ФЕСЕНКО** [Telegram](https://t.me/S4t4ll)
 
-Щоб опублікувати проект у Github Pages, налаштовуємо Github Pages (гілка ```gh-pages```), змінюємо файл ```./publish.sh```
+_студент 2-го курсу, групи ІО-35_ **Артем СПІВАК** [Telegram](https://t.me/T_i_m_00_N)
 
-```sh
+_студентка 2-го курсу, групи ІО-35_ **Анастасія НЕЧИПОРУК** [Telegram](https://t.me/Anasteiishik)
 
-#!/usr/bin/env sh
+_студентка 2-го курсу, групи ІО-35_ **Софія НОВАКІВСЬКА** [Telegram](https://t.me/awwsonny)
 
-# abort on errors
-set -e
+_студентка 2-го курсу, групи ІО-31_ **Ольга ШТИФЛЮК** [Telegram](https://t.me/fwrwxx)
 
-# build
-npm run docs:build
+## Керівник
 
-# navigate into the build output directory
-cd docs/.vuepress/dist
+_доцент кафедри ОТ ФІОТ, к.т.н., доцент_ **Андрій БОЛДАК**
 
-# if you are deploying to a custom domain
-# echo 'www.example.com' > CNAME
+[НТУУ "КИЇВСЬКИЙ ПОЛІТЕХНІЧНИЙ ІНСТИТУТ імені ІГОРЯ СІКОРСЬКОГО](https://kpi.ua/)
 
-git init
-git add -A
-git commit -m 'deploy'
+[Факультет інформатики та обчислювальної техніки](https://fiot.kpi.ua/)
 
-# if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:boldak/<USERNAME>.github.io.git master
+[Кафедра обчислювальної техніки](https://comsys.kpi.ua/)
 
-# if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/<USERNAME>/dis-edu.git master:gh-pages
-
-cd -
-
-```
-
-Потім запускаємо
-
-```bash
-    npm run publish
-```
-
-Для відлагодження документації в локальному режимі запускаємо
-
-```bash
-    npm run docs:dev
-```
-
-Доступ до локально опублікованої версії [http://localhost:3030](http://localhost:3030)
-
-
-## Додаткова інформація
-
-- [Теми проєктів](./guidelines/themes.md)
-- [Методичні вказівки](./guidelines/guidelines.md)
-
-***Happy learning! Happy coding!*** 
+Київ
