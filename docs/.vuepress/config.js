@@ -86,6 +86,7 @@ module.exports = {
     // editLinkText: 'Ви можете покращити цю сторінку'
   },
   title: 'Система управління проектами "PLIFFDAX"',
+
   description: 'Лабораторні роботи з дисципліни "Організація баз даних"',
   configureWebpack: {
     resolve: {
