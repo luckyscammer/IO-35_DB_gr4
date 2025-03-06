@@ -18,12 +18,13 @@ module.exports = {
   theme: 'cool',
   // dest: 'dist',
   head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/project-icon.png' }],
     ['link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css' }],
     ['link', {href: 'https://fonts.googleapis.com/icon?family=Material+Icons', rel :'stylesheet'}],
   ],
   themeConfig: {
     // logo: './myAvatar.png',
+    smoothScroll: true,
     sidebar: [
     {
       title: 'Вступ',
@@ -84,7 +85,8 @@ module.exports = {
     // custom text for edit link. Defaults to "Edit this page"
     // editLinkText: 'Ви можете покращити цю сторінку'
   },
-  title: 'Система управління проектами',
+  title: 'Система управління проектами "PLIFFDAX"',
+
   description: 'Лабораторні роботи з дисципліни "Організація баз даних"',
   configureWebpack: {
     resolve: {
