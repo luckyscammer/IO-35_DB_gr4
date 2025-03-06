@@ -219,4 +219,16 @@ Kubernetes і т.д. Безперечно такі методи забезпеч
 Зважаючи на зібрану інформацію, можемо зробити висновок: важливим є створення такого сервісу, який запропонує необхідіний користувачеві функціонал, при цьому забезпечить ефективне управління робочими задачами і збереже баланс між широтою інструментів і інтуїтивно зрозумілим інтерфейсом.
 
 ## 🔗 Посилання
-
+1. [Проєкт](https://uk.wikipedia.org/wiki/%D0%9F%D1%80%D0%BE%D1%94%D0%BA%D1%82)
+2. [Система управління проектами](https://pmb.com.ua/uk/slovar-terminov/sistema-upravleniya-proektom-project-management-system-instrument/)
+3. [Життєвий цикл проєкту](https://pmb.com.ua/uk/slovar-terminov/zhiznennyj-tsikl-proekta-project-life-cycle/)
+4. [Програмне забезпечення](https://dtkt.ua/dictionary/p/7447-programne-zabezpecennya)
+5. [Вимоги до програмного забезпечення](https://qalearning.com.ua/theory/lectures/material/requirements-testing-methods-equivalence/)
+6. [Артефакт](https://uk.wikipedia.org/wiki/%D0%90%D1%80%D1%82%D0%B5%D1%84%D0%B0%D0%BA%D1%82_(UML))
+7. [Agile Model](https://worksection.com/ua/blog/agile.html)
+8. [Scrum](https://career.softserveinc.com/uk-ua/stories/what-is-scrum-methodology)
+9. [Spiral Model](https://www.maxzosim.com/boehms-spiral-model/)
+10. [Incremental Model](https://itwiki.dev/qa/dev-methodologies/incremental-development-model)
+11. [Kanban](https://www.ukraine.com.ua/blog/interesting/chto-takoe-kanban.html)
+12. [Kanban-board](https://web-promo.ua/ua/blog/kanban-sho-ce-take-i-chim-vin-bude-korisnim-marketologam/)
+13. 
