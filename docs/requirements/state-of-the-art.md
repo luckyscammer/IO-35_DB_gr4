@@ -231,4 +231,3 @@ Kubernetes і т.д. Безперечно такі методи забезпеч
 10. [Incremental Model](https://itwiki.dev/qa/dev-methodologies/incremental-development-model)
 11. [Kanban](https://www.ukraine.com.ua/blog/interesting/chto-takoe-kanban.html)
 12. [Kanban-board](https://web-promo.ua/ua/blog/kanban-sho-ce-take-i-chim-vin-bude-korisnim-marketologam/)
-13. 
