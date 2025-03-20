@@ -98,7 +98,6 @@ System -> User: Automatically log in
 
 @enduml
 
-
 | **ID**           | CreateUser |
 |------------------|------------|
 | **НАЗВА**        | Створити користувача |
@@ -131,14 +130,15 @@ System -> User: Successfully logged in
 
 @startuml
 
-actor Admin
-actor System
+actor Admin as A
+control System as S
 
-Admin -> System: Open user profile
-Admin -> System: Edit user fields
-System -> System: Check permissions (InsufficientPermissionsException)
-System -> System: Validate data (InvalidDataFormatException)
-System -> System: Save updated user data
+A -> S: Open user profile
+A -> S: Edit user fields
+S -> S: Check permissions (InsufficientPermissionsException)
+S -> S: Validate data (InvalidDataFormatException)
+S -> S: Save updated user data
+S -> A: Successfully edited user
 
 @enduml
 
