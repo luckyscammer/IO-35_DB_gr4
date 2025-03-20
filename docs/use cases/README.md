@@ -199,13 +199,14 @@ System -> User: Confirmation message
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Open project
 User -> System: Click "Edit"
 User -> System: Modify project details
 System -> System: Check permissions (AccessDeniedException)
 System -> System: Save changes
+System -> User: Successfully edited project
 
 @enduml
 
