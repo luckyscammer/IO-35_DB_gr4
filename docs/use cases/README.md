@@ -135,3 +135,26 @@ System -> User: Successfully logged in
 | **РЕЗУЛЬТАТ**    | Система авторизувала користувача |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Користувач ввів неправильний пароль (**InvalidPasswordException**) <br> - Користувач ввів неправильне ім'я користувача (**InvalidUsernameException**) <br> - Система заблокувала користувача (**UserBannedException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач вводить ім'я користувача і пароль. <br> 2. Система перевіряє введені дані (**InvalidPasswordException** або **InvalidUsernameException**). <br> 3. Система перевіряє статус користувача (**UserBannedException**). <br> 4. Користувач успішно входить у систему. |
+
+@startuml
+
+actor Admin
+actor System
+
+Admin -> System: Open user profile
+Admin -> System: Edit user fields
+System -> System: Check permissions (InsufficientPermissionsException)
+System -> System: Validate data (InvalidDataFormatException)
+System -> System: Save updated user data
+
+@enduml
+
+| **ID**           | EditUser |
+|------------------|------------|
+| **НАЗВА**        | Редагувати користувача |
+| **УЧАСНИКИ**     | Користувач, адміністратор, система |
+| **ПЕРЕДУМОВИ**   | Система авторизувала користувача або адміністратора |
+| **РЕЗУЛЬТАТ**    | Система змінила дані користувача |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Користувач має недостатньо прав для редагування (**InsufficientPermissionsException**) <br> - Користувач ввів дані у неправильному форматі (**InvalidDataFormatException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор або користувач відкриває профіль користувача. <br> 2. Користувач або адміністратор змінює потрібні поля. <br> 3. Система перевіряє права (**InsufficientPermissionsException**). <br> 4. Система перевіряє введені дані на правильність (**InvalidDataFormatException**). <br> 5. Система зберігає оновлені дані користувача. |
+
