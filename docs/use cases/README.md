@@ -158,3 +158,24 @@ System -> System: Save updated user data
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Користувач має недостатньо прав для редагування (**InsufficientPermissionsException**) <br> - Користувач ввів дані у неправильному форматі (**InvalidDataFormatException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор або користувач відкриває профіль користувача. <br> 2. Користувач або адміністратор змінює потрібні поля. <br> 3. Система перевіряє права (**InsufficientPermissionsException**). <br> 4. Система перевіряє введені дані на правильність (**InvalidDataFormatException**). <br> 5. Система зберігає оновлені дані користувача. |
 
+@startuml
+
+actor Admin
+actor System
+
+Admin -> System: Select user to delete
+Admin -> System: Click "Delete User"
+System -> System: Check permissions (InsufficientPermissionsException)
+System -> System: Delete user
+System -> Admin: User deleted
+
+@enduml
+
+| **ID**           | DeleteUser |
+|------------------|------------|
+| **НАЗВА**        | Видалити користувача |
+| **УЧАСНИКИ**     | Адміністратор, система |
+| **ПЕРЕДУМОВИ**   | Система авторизувала адміністратора |
+| **РЕЗУЛЬТАТ**    | Система видаляє користувача |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Користувач має недостатньо прав для видалення (**InsufficientPermissionsException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор вибирає користувача для видалення. <br> 2. Адміністратор натискає кнопку "Видалити користувача". <br> 3. Система перевіряє права адміністратора (**InsufficientPermissionsException**). <br> 4. Система видаляє користувача (**UserNotFoundException**). |
