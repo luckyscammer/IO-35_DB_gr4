@@ -341,3 +341,124 @@ System -> Manager: Board deleted
 | **РЕЗУЛЬТАТ**     | Видалена дошка |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **DeleteBoard_NoRights_EXC** – менеджер не має прав на видалення обраної дошки <br> - **DeleteBoard_InvalidName_EXC** – менеджер вказав ім'я дошки, що не збігається з реальним <br> - **DeleteBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Дошки" та обирає потрібну для видалення дошку. <br> 2. Менеджер натискає кнопку "Видалити дошку". <br> 3. Система перевіряє права менеджера на видалення обраної дошки (**можлива DeleteBoard_NoRights_EXC**). <br> 4. Система відкриває форму підтвердження видалення дошки. <br> 5. Менеджер вводить назву дошки для підтвердження процесу видалення (**можлива DeleteBoard_InvalidName_EXC**). <br> 6. Менеджер натискає кнопку "Видалити дошку" (**можлива DeleteBoard_CancelButton_EXC**). <br> 7. Система видаляє дошку з проєкту. |
+
+@startuml
+
+actor Admin
+actor System
+
+Admin -> System: Select project to block
+Admin -> System: Click "Block Project"
+System -> System: Open block project form
+Admin -> System: Fill block reason and duration
+Admin -> System: Click "Confirm"
+System -> System: Validate project (BlockProject_ProjectHasBeenRemoved_EXC, BlockProject_ProjectHasBeenBlocked_EXC)
+System -> System: Block project
+System -> Admin: Project blocked
+
+@enduml
+
+| **ID**             | BlockProject |
+|--------------------|-------------|
+| **НАЗВА**         | Заблокувати проєкт |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Адміністратор авторизований <br> - Система містить дані про проєкт <br> - Проєкт порушує умови використання системи |
+| **РЕЗУЛЬТАТ**     | Заблокований проєкт |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **BlockProject_ProjectHasBeenRemoved_EXC** – проєкт видалено з системи <br> - **BlockProject_ProjectHasBeenBlocked_EXC** – проєкт вже заблоковано <br> - **BlockProject_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор переходить у розділ "Проєкти" та вибирає потрібний для блокування проєкт. <br> 2. Адміністратор натискає кнопку "Заблокувати проєкт". <br> 3. Система відкриває форму із параметрами блокування проєкту. <br> 4. Адміністратор заповнює форму, вказуючи причину та термін дії блокування. <br> 5. Адміністратор натискає кнопку "Підтвердити" (**можлива BlockProject_CancelButton_EXC**). <br> 6. Система перевіряє валідність обраного адміністратором проєкту (**можливі BlockProject_ProjectHasBeenRemoved_EXC, BlockProject_ProjectHasBeenBlocked_EXC**). <br> 7. Система здійснює операцію блокування й повідомляє менеджера цього проєкту та адміністратора про заблокований проєкт. |
+
+@startuml
+
+actor Admin
+actor System
+
+Admin -> System: Select blocked project
+Admin -> System: Click "Unblock Project"
+Admin -> System: Click "Confirm"
+System -> System: Validate project
+System -> System: Unblock project
+System -> Admin: Project unblocked
+
+@enduml
+
+| **ID**             | UnblockProject |
+|--------------------|----------------|
+| **НАЗВА**         | Розблокувати проєкт |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Адміністратор авторизований <br> - Проєкт заблокований в системі |
+| **РЕЗУЛЬТАТ**     | Розблокований проєкт |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **UnblockProject_ProjectHasBeenRemoved_EXC** – проєкт видалено з системи <br> - **UnblockProject_ProjectHasBeenUnblocked_EXC** – проєкт вже розблоковано <br> - **UnblockProject_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор переходить у розділ "Заблоковані проєкти" та вибирає потрібний для розблокування проєкт. <br> 2. Адміністратор натискає на кнопку "Розблокувати проєкт". <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива UnblockProject_CancelButton_EXC**). <br> 4. Система перевіряє валідність обраного адміністратором проєкту (**можливі UnblockProject_ProjectHasBeenRemoved_EXC, UnblockProject_ProjectHasBeenUnblocked_EXC**). <br> 5. Система здійснює операцію розблокування й повідомляє менеджера цього проєкту та адміністратора про успішно розблокований проєкт. |
+
+@startuml
+
+actor Administrator
+actor System
+actor User
+
+Administrator -> System: Detect suspicious user activity
+Administrator -> System: Fill in the ban form\n(reason and ban duration)
+Administrator -> System: Click "Confirm"
+System -> System: Validate user data
+System -> System: Ban user
+System -> Administrator: Confirm user has been banned
+System -> User: Notify about the ban
+
+@enduml
+
+| **ID**             | BanUser |
+|--------------------|---------|
+| **НАЗВА**         | Заблокувати користувача |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Користувач багаторазово неправильно вводить пароль <br> - Адміністратор виявив підозрілу активність користувача <br> - Користувач порушує умови використання системи |
+| **РЕЗУЛЬТАТ**     | Заблокований користувач |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **BanUser_NoMatchingUser_EXC** – введені дані не відповідають жодному користувачеві <br> - **BanUser_UserHasBeenRemoved_EXC** – користувача видалено з системи <br> - **BanUser_UserHasBeenBanned_EXC** – користувача вже заблоковано <br> - **BanUser_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор фіксує підозрілу активність користувача. <br> 2. Адміністратор заповнює спеціальну форму для блокування, вказуючи причину та термін дії блокування. <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива BanUser_CancelButton_EXC**). <br> 4. Система перевіряє валідність введених адміністратором даних (**можливі BanUser_NoMatchingUser_EXC, BanUser_UserHasBeenRemoved_EXC, BanUser_UserHasBeenBanned_EXC**). <br> 5. Система виконує блокування користувача і повідомляє його про це. |
+
+@startuml
+
+actor Administrator
+actor System
+
+Administrator -> System: Select blocked user
+Administrator -> System: Click "Unban User"
+Administrator -> System: Click "Confirm"
+System -> System: Validate user data
+System -> System: Unban user
+System -> Administrator: Confirm user has been unbanned
+System -> User: Notify about unban
+
+@enduml
+
+| **ID**             | UnbanUser |
+|--------------------|----------|
+| **НАЗВА**         | Розблокувати користувача |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Користувач заблокований |
+| **РЕЗУЛЬТАТ**     | Розблокований користувач |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **UnbanUser_NoMatchingUser_EXC** – введені дані не відповідають жодному користувачеві <br> - **UnbanUser_UserHasBeenRemoved_EXC** – користувача видалено з системи <br> - **UnbanUser_UserHasBeenUnbanned_EXC** – користувача вже розблоковано <br> - **UnbanUser_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор фіксує потрібного користувача. <br> 2. Адміністратор натискає на кнопку "Розблокувати користувача". <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива UnbanUser_CancelButton_EXC**). <br> 4. Система перевіряє валідність введених адміністратором даних (**можливі UnbanUser_NoMatchingUser_EXC, UnbanUser_UserHasBeenRemoved_EXC, UnbanUser_UserHasBeenUnbanned_EXC**). <br> 5. Система виконує розблокування користувача і повідомляє його про це. |
+
+@startuml
+
+actor Administrator
+actor System
+
+Administrator -> System: Log in to the system
+Administrator -> System: Select "Edit System Settings"
+System -> System: Open system settings edit form
+Administrator -> System: Modify system settings
+Administrator -> System: Click "Save Changes"
+System -> System: Save updated settings
+System -> Administrator: Confirm settings saved
+
+@enduml
+
+| **ID**             | EditSystemSettings |
+|--------------------|-------------------|
+| **НАЗВА**         | Редагувати налаштування системи |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Адміністратор авторизований |
+| **РЕЗУЛЬТАТ**     | Нові налаштування системи |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **EditSystemSettings_InvalidData_EXC** – адміністратор ввів невалідні дані <br> - **EditSystemSettings_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор входить в систему. <br> 2. Адміністратор обирає опцію "Редагувати налаштування системи". <br> 3. Система відкриває форму зміни налаштувань системи (**можлива EditSystemSettings_CancelButton_EXC**). <br> 4. Адміністратор змінює налаштування системи (**можлива EditSystemSettings_InvalidData_EXC**). <br> 5. Адміністратор натискає кнопку "Зберегти зміни". <br> 6. Система зберігає змінені налаштування. |
