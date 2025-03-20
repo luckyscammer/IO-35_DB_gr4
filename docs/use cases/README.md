@@ -222,12 +222,13 @@ System -> User: Successfully edited project
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Select project to delete
 User -> System: Click "Delete Project"
 System -> System: Check permissions (AccessDeniedException)
 System -> System: Delete project
+System -> User: Successfully deleted project
 
 @enduml
 
