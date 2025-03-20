@@ -294,3 +294,26 @@ System -> Manager: User removed
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **RemoveUserFromProject_WrongUsername_EXC** – менеджер ввів неправильне ім'я користувача <br> - **RemoveUserFromProject_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Проєкти". <br> 2. Менеджер обирає проєкт і натискає кнопку "Видалити користувача". <br> 3. Система відкриває форму для введення ім'я користувача. <br> 4. Менеджер вводить ім'я користувача (**можлива RemoveUserFromProject_WrongUsername_EXC**). <br> 5. Менеджер натискає кнопку "Видалити" (**можлива RemoveUserFromProject_CancelButton_EXC**). <br> 6. Система видаляє користувача з проєкту. <br> 7. Система закриває форму. <br> 8. Система показує повідомлення, що користувач успішно видалений з обраного проєкту. |
 
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Click "Create Board"
+System -> System: Open board creation form
+Manager -> System: Fill board form
+Manager -> System: Click "Create"
+System -> System: Validate input (CreateBoard_NoName_EXC, CreateBoard_ExistingName_EXC)
+System -> System: Create board
+System -> Manager: Confirmation message
+
+@enduml
+
+| **ID**             | CreateBoard |
+|--------------------|------------|
+| **НАЗВА**         | Створити дошку |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Менеджер авторизований <br> - Менеджер є членом проєкту |
+| **РЕЗУЛЬТАТ**     | Нова дошка у проєкті |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **CreateBoard_NoName_EXC** – менеджер не вказав назву дошки <br> - **CreateBoard_ExistingName_EXC** – менеджер ввів ім'я дошки, що вже зайнято <br> - **CreateBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер обирає проєкт і натискає на кнопку "Створити дошку". <br> 2. Система відкриває форму із полями інформації про дошку (**можлива CreateBoard_CancelButton_EXC**). <br> 3. Менеджер заповнює інформацію про дошку: вказує назву та опис. <br> 4. Менеджер натискає кнопку "Створити". <br> 5. Система перевіряє на валідність інформацію про дошку (**можливі CreateBoard_NoName_EXC та CreateBoard_ExistingName_EXC**). <br> 6. Система створює нову дошку у проєкті. |
