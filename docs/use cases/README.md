@@ -179,3 +179,165 @@ System -> Admin: User deleted
 | **РЕЗУЛЬТАТ**    | Система видаляє користувача |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Користувач має недостатньо прав для видалення (**InsufficientPermissionsException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор вибирає користувача для видалення. <br> 2. Адміністратор натискає кнопку "Видалити користувача". <br> 3. Система перевіряє права адміністратора (**InsufficientPermissionsException**). <br> 4. Система видаляє користувача (**UserNotFoundException**). |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Click "Create Project"
+User -> System: Fill project form (project name)
+System -> System: Validate input (NullProjectNameException, InvalidProjectNameException)
+System -> System: Create project
+System -> User: Assign project manager rights
+System -> User: Confirmation message
+
+@enduml
+
+| **ID**           | CreateProject |
+|------------------|------------|
+| **НАЗВА**        | Створити проект |
+| **УЧАСНИКИ**     | Користувач, система |
+| **ПЕРЕДУМОВИ**   | Система авторизувала користувача |
+| **РЕЗУЛЬТАТ**    | Система створює проєкт та надає права керівника проєкту користувачу |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Користувач не ввів назву проєкту (**NullProjectNameException**) <br> - Користувач ввів назву проєкту у неправильному форматі (**InvalidProjectNameException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач натискає кнопку "Створити проект". <br> 2. Користувач заповнює форму (назва проекту). <br> 3. Система перевіряє дані на валідність. <br> 4. Система створює новий проект. <br> 5. Система надає права керівника проєкту користувачу. <br> 6. Користувач отримує підтвердження про створення проекту. |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Open project
+User -> System: Click "Edit"
+User -> System: Modify project details
+System -> System: Check permissions (AccessDeniedException)
+System -> System: Save changes
+
+@enduml
+
+| **ID**            | EditProject |
+|------------------|-----------------|
+| **НАЗВА**         | Редагувати проект |
+| **УЧАСНИКИ**     | Користувач (керівник проєкту), адміністратор, система |
+| **ПЕРЕДУМОВИ**   | - Система авторизувала користувача <br> - Користувач має права на редагування проекту |
+| **РЕЗУЛЬТАТ**    | Система змінює дані проєкту |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла проєкт (**ProjectNotFoundException**) <br> - Користувач має недостатньо прав для редагування (**AccessDeniedException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач відкриває проект. <br> 2. Користувач натискає кнопку "Редагувати". <br> 3. Користувач вносить зміни. <br> 4. Система перевіряє права на редагування. <br> 5. Система зберігає зміни. |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Select project to delete
+User -> System: Click "Delete Project"
+System -> System: Check permissions (AccessDeniedException)
+System -> System: Delete project
+
+@enduml
+
+| **ID**            | DeleteProject |
+|------------------|-----------------|
+| **НАЗВА**         | Видалити проект |
+| **УЧАСНИКИ**     | Користувач (керівник проєкту), адміністратор, система |
+| **ПЕРЕДУМОВИ**   | - Система авторизувала користувача <br> - Користувач має права на видалення проєкту |
+| **РЕЗУЛЬТАТ**    | Система видаляє проєкт |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла проєкт (**ProjectNotFoundException**) <br> - Користувач має недостатньо прав для видалення (**AccessDeniedException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач вибирає проект для видалення. <br> 2. Користувач натискає кнопку "Видалити". <br> 3. Система перевіряє права на видалення. <br> 4. Система видаляє проект. |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Open project
+User -> System: Click "Add Participant"
+User -> System: Input participant details
+System -> System: Check permissions (AccessDeniedException)
+System -> System: Add participant to project
+System -> User: Participant added
+
+@enduml
+
+| **ID**            | AddUserToProject |
+|------------------|-----------------|
+| **НАЗВА**         | Додати учасника до проекту |
+| **УЧАСНИКИ**     | Користувач (керівник проєкту), адміністратор, система |
+| **ПЕРЕДУМОВИ**   | - Система авторизувала користувача <br> - Користувач має права на редагування проекту |
+| **РЕЗУЛЬТАТ**    | Система додає учасника до проєкту |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Система не знайшла проєкт (**ProjectNotFoundException**) <br> - Користувач має недостатньо прав для додавання учасника (**AccessDeniedException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач відкриває проект. <br> 2. Користувач натискає кнопку "Додати учасника". <br> 3. Користувач вводить дані нового учасника. <br> 4. Система перевіряє права на додавання учасника. <br> 5. Система додає учасника до проекту. |
+
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Open project
+Manager -> System: Click "Remove User"
+System -> System: Open remove user form
+Manager -> System: Input username
+System -> System: Validate input (RemoveUserFromProject_WrongUsername_EXC)
+Manager -> System: Click "Remove"
+System -> System: Remove user from project
+System -> Manager: User removed
+
+@enduml
+
+| **ID**             | RemoveUserFromProject |
+|--------------------|----------------------|
+| **НАЗВА**         | Видалити користувача з проєкту |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Користувач є учасником проєкту |
+| **РЕЗУЛЬТАТ**     | Видалений член проєкту |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **RemoveUserFromProject_WrongUsername_EXC** – менеджер ввів неправильне ім'я користувача <br> - **RemoveUserFromProject_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Проєкти". <br> 2. Менеджер обирає проєкт і натискає кнопку "Видалити користувача". <br> 3. Система відкриває форму для введення ім'я користувача. <br> 4. Менеджер вводить ім'я користувача (**можлива RemoveUserFromProject_WrongUsername_EXC**). <br> 5. Менеджер натискає кнопку "Видалити" (**можлива RemoveUserFromProject_CancelButton_EXC**). <br> 6. Система видаляє користувача з проєкту. <br> 7. Система закриває форму. <br> 8. Система показує повідомлення, що користувач успішно видалений з обраного проєкту. |
+
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Click "Create Board"
+System -> System: Open board creation form
+Manager -> System: Fill board form
+Manager -> System: Click "Create"
+System -> System: Validate input (CreateBoard_NoName_EXC, CreateBoard_ExistingName_EXC)
+System -> System: Create board
+System -> Manager: Confirmation message
+
+@enduml
+
+| **ID**             | CreateBoard |
+|--------------------|------------|
+| **НАЗВА**         | Створити дошку |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Менеджер авторизований <br> - Менеджер є членом проєкту |
+| **РЕЗУЛЬТАТ**     | Нова дошка у проєкті |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **CreateBoard_NoName_EXC** – менеджер не вказав назву дошки <br> - **CreateBoard_ExistingName_EXC** – менеджер ввів ім'я дошки, що вже зайнято <br> - **CreateBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер обирає проєкт і натискає на кнопку "Створити дошку". <br> 2. Система відкриває форму із полями інформації про дошку (**можлива CreateBoard_CancelButton_EXC**). <br> 3. Менеджер заповнює інформацію про дошку: вказує назву та опис. <br> 4. Менеджер натискає кнопку "Створити". <br> 5. Система перевіряє на валідність інформацію про дошку (**можливі CreateBoard_NoName_EXC та CreateBoard_ExistingName_EXC**). <br> 6. Система створює нову дошку у проєкті. |
+
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Select board to delete
+Manager -> System: Click "Delete Board"
+System -> System: Check permissions (DeleteBoard_NoRights_EXC)
+Manager -> System: Input board name for confirmation
+System -> System: Validate input (DeleteBoard_InvalidName_EXC)
+System -> System: Delete board
+System -> Manager: Board deleted
+
+@enduml
+
+| **ID**             | DeleteBoard |
+|--------------------|------------|
+| **НАЗВА**         | Видалити дошку |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Менеджер має дошку у проєкті <br> - Система містить інформацію про дошку для видалення |
+| **РЕЗУЛЬТАТ**     | Видалена дошка |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **DeleteBoard_NoRights_EXC** – менеджер не має прав на видалення обраної дошки <br> - **DeleteBoard_InvalidName_EXC** – менеджер вказав ім'я дошки, що не збігається з реальним <br> - **DeleteBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Дошки" та обирає потрібну для видалення дошку. <br> 2. Менеджер натискає кнопку "Видалити дошку". <br> 3. Система перевіряє права менеджера на видалення обраної дошки (**можлива DeleteBoard_NoRights_EXC**). <br> 4. Система відкриває форму підтвердження видалення дошки. <br> 5. Менеджер вводить назву дошки для підтвердження процесу видалення (**можлива DeleteBoard_InvalidName_EXC**). <br> 6. Менеджер натискає кнопку "Видалити дошку" (**можлива DeleteBoard_CancelButton_EXC**). <br> 7. Система видаляє дошку з проєкту. |
