@@ -317,3 +317,27 @@ System -> Manager: Confirmation message
 | **РЕЗУЛЬТАТ**     | Нова дошка у проєкті |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **CreateBoard_NoName_EXC** – менеджер не вказав назву дошки <br> - **CreateBoard_ExistingName_EXC** – менеджер ввів ім'я дошки, що вже зайнято <br> - **CreateBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер обирає проєкт і натискає на кнопку "Створити дошку". <br> 2. Система відкриває форму із полями інформації про дошку (**можлива CreateBoard_CancelButton_EXC**). <br> 3. Менеджер заповнює інформацію про дошку: вказує назву та опис. <br> 4. Менеджер натискає кнопку "Створити". <br> 5. Система перевіряє на валідність інформацію про дошку (**можливі CreateBoard_NoName_EXC та CreateBoard_ExistingName_EXC**). <br> 6. Система створює нову дошку у проєкті. |
+
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Select board to delete
+Manager -> System: Click "Delete Board"
+System -> System: Check permissions (DeleteBoard_NoRights_EXC)
+Manager -> System: Input board name for confirmation
+System -> System: Validate input (DeleteBoard_InvalidName_EXC)
+System -> System: Delete board
+System -> Manager: Board deleted
+
+@enduml
+
+| **ID**             | DeleteBoard |
+|--------------------|------------|
+| **НАЗВА**         | Видалити дошку |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Менеджер має дошку у проєкті <br> - Система містить інформацію про дошку для видалення |
+| **РЕЗУЛЬТАТ**     | Видалена дошка |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **DeleteBoard_NoRights_EXC** – менеджер не має прав на видалення обраної дошки <br> - **DeleteBoard_InvalidName_EXC** – менеджер вказав ім'я дошки, що не збігається з реальним <br> - **DeleteBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Дошки" та обирає потрібну для видалення дошку. <br> 2. Менеджер натискає кнопку "Видалити дошку". <br> 3. Система перевіряє права менеджера на видалення обраної дошки (**можлива DeleteBoard_NoRights_EXC**). <br> 4. Система відкриває форму підтвердження видалення дошки. <br> 5. Менеджер вводить назву дошки для підтвердження процесу видалення (**можлива DeleteBoard_InvalidName_EXC**). <br> 6. Менеджер натискає кнопку "Видалити дошку" (**можлива DeleteBoard_CancelButton_EXC**). <br> 7. Система видаляє дошку з проєкту. |
