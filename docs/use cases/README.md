@@ -38,12 +38,12 @@ A -u-> (Edit System Settings)
 
 actor User as U
 
-U --> (Create User)
-U --> (Authorize User)
-U --> (Edit User)
-U --> (Create Project)
-U --> (Edit Project)
-U --> (Delete Project)
+U -d-> (Create User)
+U -d-> (Authorize User)
+U -d-> (Edit User)
+U -u-> (Create Project)
+U -u-> (Edit Project)
+U -u-> (Delete Project)
 
 @enduml
 
