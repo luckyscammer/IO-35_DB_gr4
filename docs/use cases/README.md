@@ -246,3 +246,51 @@ System -> System: Delete project
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла проєкт (**ProjectNotFoundException**) <br> - Користувач має недостатньо прав для видалення (**AccessDeniedException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач вибирає проект для видалення. <br> 2. Користувач натискає кнопку "Видалити". <br> 3. Система перевіряє права на видалення. <br> 4. Система видаляє проект. |
 
+@startuml
+
+actor User
+actor System
+
+User -> System: Open project
+User -> System: Click "Add Participant"
+User -> System: Input participant details
+System -> System: Check permissions (AccessDeniedException)
+System -> System: Add participant to project
+System -> User: Participant added
+
+@enduml
+
+| **ID**            | AddUserToProject |
+|------------------|-----------------|
+| **НАЗВА**         | Додати учасника до проекту |
+| **УЧАСНИКИ**     | Користувач (керівник проєкту), адміністратор, система |
+| **ПЕРЕДУМОВИ**   | - Система авторизувала користувача <br> - Користувач має права на редагування проекту |
+| **РЕЗУЛЬТАТ**    | Система додає учасника до проєкту |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Система не знайшла проєкт (**ProjectNotFoundException**) <br> - Користувач має недостатньо прав для додавання учасника (**AccessDeniedException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач відкриває проект. <br> 2. Користувач натискає кнопку "Додати учасника". <br> 3. Користувач вводить дані нового учасника. <br> 4. Система перевіряє права на додавання учасника. <br> 5. Система додає учасника до проекту. |
+
+@startuml
+
+actor Manager
+actor System
+
+Manager -> System: Open project
+Manager -> System: Click "Remove User"
+System -> System: Open remove user form
+Manager -> System: Input username
+System -> System: Validate input (RemoveUserFromProject_WrongUsername_EXC)
+Manager -> System: Click "Remove"
+System -> System: Remove user from project
+System -> Manager: User removed
+
+@enduml
+
+| **ID**             | RemoveUserFromProject |
+|--------------------|----------------------|
+| **НАЗВА**         | Видалити користувача з проєкту |
+| **УЧАСНИКИ**      | Менеджер, система |
+| **ПЕРЕДУМОВИ**    | - Користувач є учасником проєкту |
+| **РЕЗУЛЬТАТ**     | Видалений член проєкту |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **RemoveUserFromProject_WrongUsername_EXC** – менеджер ввів неправильне ім'я користувача <br> - **RemoveUserFromProject_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Проєкти". <br> 2. Менеджер обирає проєкт і натискає кнопку "Видалити користувача". <br> 3. Система відкриває форму для введення ім'я користувача. <br> 4. Менеджер вводить ім'я користувача (**можлива RemoveUserFromProject_WrongUsername_EXC**). <br> 5. Менеджер натискає кнопку "Видалити" (**можлива RemoveUserFromProject_CancelButton_EXC**). <br> 6. Система видаляє користувача з проєкту. <br> 7. Система закриває форму. <br> 8. Система показує повідомлення, що користувач успішно видалений з обраного проєкту. |
+
