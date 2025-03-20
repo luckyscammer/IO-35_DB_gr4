@@ -388,3 +388,27 @@ System -> Admin: Project unblocked
 | **РЕЗУЛЬТАТ**     | Розблокований проєкт |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **UnblockProject_ProjectHasBeenRemoved_EXC** – проєкт видалено з системи <br> - **UnblockProject_ProjectHasBeenUnblocked_EXC** – проєкт вже розблоковано <br> - **UnblockProject_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор переходить у розділ "Заблоковані проєкти" та вибирає потрібний для розблокування проєкт. <br> 2. Адміністратор натискає на кнопку "Розблокувати проєкт". <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива UnblockProject_CancelButton_EXC**). <br> 4. Система перевіряє валідність обраного адміністратором проєкту (**можливі UnblockProject_ProjectHasBeenRemoved_EXC, UnblockProject_ProjectHasBeenUnblocked_EXC**). <br> 5. Система здійснює операцію розблокування й повідомляє менеджера цього проєкту та адміністратора про успішно розблокований проєкт. |
+@startuml
+
+actor Administrator
+actor System
+actor User
+
+Administrator -> System: Detect suspicious user activity
+Administrator -> System: Fill in the ban form\n(reason and ban duration)
+Administrator -> System: Click "Confirm"
+System -> System: Validate user data
+System -> System: Ban user
+System -> Administrator: Confirm user has been banned
+System -> User: Notify about the ban
+
+@enduml
+
+| **ID**             | BanUser |
+|--------------------|---------|
+| **НАЗВА**         | Заблокувати користувача |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Користувач багаторазово неправильно вводить пароль <br> - Адміністратор виявив підозрілу активність користувача <br> - Користувач порушує умови використання системи |
+| **РЕЗУЛЬТАТ**     | Заблокований користувач |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **BanUser_NoMatchingUser_EXC** – введені дані не відповідають жодному користувачеві <br> - **BanUser_UserHasBeenRemoved_EXC** – користувача видалено з системи <br> - **BanUser_UserHasBeenBanned_EXC** – користувача вже заблоковано <br> - **BanUser_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор фіксує підозрілу активність користувача. <br> 2. Адміністратор заповнює спеціальну форму для блокування, вказуючи причину та термін дії блокування. <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива BanUser_CancelButton_EXC**). <br> 4. Система перевіряє валідність введених адміністратором даних (**можливі BanUser_NoMatchingUser_EXC, BanUser_UserHasBeenRemoved_EXC, BanUser_UserHasBeenBanned_EXC**). <br> 5. Система виконує блокування користувача і повідомляє його про це. |
