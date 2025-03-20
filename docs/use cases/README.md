@@ -179,3 +179,27 @@ System -> Admin: User deleted
 | **РЕЗУЛЬТАТ**    | Система видаляє користувача |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Система не знайшла користувача (**UserNotFoundException**) <br> - Користувач має недостатньо прав для видалення (**InsufficientPermissionsException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор вибирає користувача для видалення. <br> 2. Адміністратор натискає кнопку "Видалити користувача". <br> 3. Система перевіряє права адміністратора (**InsufficientPermissionsException**). <br> 4. Система видаляє користувача (**UserNotFoundException**). |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Click "Create Project"
+User -> System: Fill project form (project name)
+System -> System: Validate input (NullProjectNameException, InvalidProjectNameException)
+System -> System: Create project
+System -> User: Assign project manager rights
+System -> User: Confirmation message
+
+@enduml
+
+| **ID**           | CreateProject |
+|------------------|------------|
+| **НАЗВА**        | Створити проект |
+| **УЧАСНИКИ**     | Користувач, система |
+| **ПЕРЕДУМОВИ**   | Система авторизувала користувача |
+| **РЕЗУЛЬТАТ**    | Система створює проєкт та надає права керівника проєкту користувачу |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Користувач не ввів назву проєкту (**NullProjectNameException**) <br> - Користувач ввів назву проєкту у неправильному форматі (**InvalidProjectNameException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач натискає кнопку "Створити проект". <br> 2. Користувач заповнює форму (назва проекту). <br> 3. Система перевіряє дані на валідність. <br> 4. Система створює новий проект. <br> 5. Система надає права керівника проєкту користувачу. <br> 6. Користувач отримує підтвердження про створення проекту. |
+
