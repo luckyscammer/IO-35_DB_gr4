@@ -438,3 +438,27 @@ System -> User: Notify about unban
 | **РЕЗУЛЬТАТ**     | Розблокований користувач |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **UnbanUser_NoMatchingUser_EXC** – введені дані не відповідають жодному користувачеві <br> - **UnbanUser_UserHasBeenRemoved_EXC** – користувача видалено з системи <br> - **UnbanUser_UserHasBeenUnbanned_EXC** – користувача вже розблоковано <br> - **UnbanUser_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор фіксує потрібного користувача. <br> 2. Адміністратор натискає на кнопку "Розблокувати користувача". <br> 3. Адміністратор натискає кнопку "Підтвердити" (**можлива UnbanUser_CancelButton_EXC**). <br> 4. Система перевіряє валідність введених адміністратором даних (**можливі UnbanUser_NoMatchingUser_EXC, UnbanUser_UserHasBeenRemoved_EXC, UnbanUser_UserHasBeenUnbanned_EXC**). <br> 5. Система виконує розблокування користувача і повідомляє його про це. |
+
+@startuml
+
+actor Administrator
+actor System
+
+Administrator -> System: Log in to the system
+Administrator -> System: Select "Edit System Settings"
+System -> System: Open system settings edit form
+Administrator -> System: Modify system settings
+Administrator -> System: Click "Save Changes"
+System -> System: Save updated settings
+System -> Administrator: Confirm settings saved
+
+@enduml
+
+| **ID**             | EditSystemSettings |
+|--------------------|-------------------|
+| **НАЗВА**         | Редагувати налаштування системи |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Адміністратор авторизований |
+| **РЕЗУЛЬТАТ**     | Нові налаштування системи |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **EditSystemSettings_InvalidData_EXC** – адміністратор ввів невалідні дані <br> - **EditSystemSettings_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор входить в систему. <br> 2. Адміністратор обирає опцію "Редагувати налаштування системи". <br> 3. Система відкриває форму зміни налаштувань системи (**можлива EditSystemSettings_CancelButton_EXC**). <br> 4. Адміністратор змінює налаштування системи (**можлива EditSystemSettings_InvalidData_EXC**). <br> 5. Адміністратор натискає кнопку "Зберегти зміни". <br> 6. Система зберігає змінені налаштування. |
