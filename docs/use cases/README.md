@@ -8,34 +8,27 @@ actor User as U
 actor Manager as M
 actor Administrator as A
 
-M --|> U
-A --|> M
+M -r-|> U
+A -r-|> M
 
-U --> (Create User)
-U --> (Authorize User)
-U --> (Edit User)
-U --> (Create Project)
-U --> (Edit Project)
-U --> (Delete Project)
+U -d-> (Create User)
+U -d-> (Authorize User)
+U -d-> (Edit User)
+U -u-> (Create Project)
+U -u-> (Edit Project)
+U -u-> (Delete Project)
 
-M --> (Create Project)
-M --> (Edit Project)
-M --> (Delete Project)
-M --> (Add User To Project)
-M --> (Remove User From Project)
-M --> (Create Board)
-M --> (Delete Board)
+M -d-> (Add User To Project)
+M -d-> (Remove User From Project)
+M -u-> (Create Board)
+M -u-> (Delete Board)
 
-A --> (Delete User)
-A --> (Edit User)
-A --> (Edit Project)
-A --> (Delete Project)
-A --> (Add User To Project)
-A --> (Block Project)
-A --> (Unblock Project)
-A --> (Ban User)
-A --> (Unban User)
-A --> (Edit System Settings)
+A -d-> (Delete User)
+A -d-> (Block Project)
+A -d-> (Unblock Project)
+A -u-> (Ban User)
+A -u-> (Unban User)
+A -u-> (Edit System Settings)
 
 @enduml
 
