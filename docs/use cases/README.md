@@ -72,13 +72,13 @@ A -l-> (Edit System Settings)
 
 actor Manager as M
 
-M --> (Create Project)
-M --> (Edit Project)
-M --> (Delete Project)
-M --> (Add User To Project)
-M --> (Remove User From Project)
-M --> (Create Board)
-M --> (Delete Board)
+M -d-> (Create Project)
+M -d-> (Edit Project)
+M -d-> (Delete Project)
+M -r-> (Add User To Project)
+M -l-> (Remove User From Project)
+M -u-> (Create Board)
+M -u-> (Delete Board)
 
 @enduml
 
