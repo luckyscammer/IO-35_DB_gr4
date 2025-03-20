@@ -114,3 +114,24 @@ System -> User: Automatically log in
 | **РЕЗУЛЬТАТ**    | Система створює обліковий запис користувача |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - Користувач не ввів ім'я користувача (**NullUsernameException**) <br> - Користувач не ввів пошту (**NullEmailException**) <br> - Користувач не ввів пароль (**NullPasswordException**) <br> - Користувач з таким ім'ям вже існує (**UserAlreadyExistsException**) <br> - Користувач вказав неправильний формат пошти (**WrongEmailFormatException**) <br> - Користувач ввів недостатньо сильний пароль (**WeakPasswordException**) |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач натискає на кнопку "Зареєструватись". <br> 2. Користувач заповнює поля реєстрації (ім'я користувача, пошта, пароль). <br> 3. Користувач натискає на кнопку "Створити". <br> 4. Система перевіряє введені поля на валідність. <br> 5. Система створює обліковий запис користувача. <br> 6. Користувач автоматично входить у систему. |
+
+@startuml
+
+actor User
+actor System
+
+User -> System: Input username and password
+System -> System: Check username and password (InvalidPasswordException, InvalidUsernameException)
+System -> System: Check user status (UserBannedException)
+System -> User: Successfully logged in
+
+@enduml
+
+| **ID**           | AuthorizeUser |
+|------------------|--------------|
+| **НАЗВА**        | Авторизувати користувача |
+| **УЧАСНИКИ**     | Користувач, система |
+| **ПЕРЕДУМОВИ**   | Система зареєструвала користувача |
+| **РЕЗУЛЬТАТ**    | Система авторизувала користувача |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - Користувач ввів неправильний пароль (**InvalidPasswordException**) <br> - Користувач ввів неправильне ім'я користувача (**InvalidUsernameException**) <br> - Система заблокувала користувача (**UserBannedException**) |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Користувач вводить ім'я користувача і пароль. <br> 2. Система перевіряє введені дані (**InvalidPasswordException** або **InvalidUsernameException**). <br> 3. Система перевіряє статус користувача (**UserBannedException**). <br> 4. Користувач успішно входить у систему. |
