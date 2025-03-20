@@ -87,7 +87,7 @@ M -u-> (Delete Board)
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Click "Register"
 User -> System: Fill registration form (username, email, password)
@@ -110,7 +110,7 @@ System -> User: Automatically log in
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Input username and password
 System -> System: Check username and password (InvalidPasswordException, InvalidUsernameException)
@@ -154,7 +154,7 @@ S -> A: Successfully edited user
 @startuml
 
 actor Admin
-actor System
+control System
 
 Admin -> System: Select user to delete
 Admin -> System: Click "Delete User"
@@ -176,7 +176,7 @@ System -> Admin: User deleted
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Click "Create Project"
 User -> System: Fill project form (project name)
@@ -244,7 +244,7 @@ System -> User: Successfully deleted project
 @startuml
 
 actor User
-actor System
+control System
 
 User -> System: Open project
 User -> System: Click "Add Participant"
@@ -267,7 +267,7 @@ System -> User: Participant added
 @startuml
 
 actor Manager
-actor System
+control System
 
 Manager -> System: Open project
 Manager -> System: Click "Remove User"
@@ -292,7 +292,7 @@ System -> Manager: User removed
 @startuml
 
 actor Manager
-actor System
+control System
 
 Manager -> System: Click "Create Board"
 System -> System: Open board creation form
@@ -316,7 +316,7 @@ System -> Manager: Confirmation message
 @startuml
 
 actor Manager
-actor System
+control System
 
 Manager -> System: Select board to delete
 Manager -> System: Click "Delete Board"
@@ -340,7 +340,7 @@ System -> Manager: Board deleted
 @startuml
 
 actor Admin
-actor System
+control System
 
 Admin -> System: Select project to block
 Admin -> System: Click "Block Project"
@@ -365,7 +365,7 @@ System -> Admin: Project blocked
 @startuml
 
 actor Admin
-actor System
+control System
 
 Admin -> System: Select blocked project
 Admin -> System: Click "Unblock Project"
@@ -388,8 +388,7 @@ System -> Admin: Project unblocked
 @startuml
 
 actor Administrator
-actor System
-actor User
+control System
 
 Administrator -> System: Detect suspicious user activity
 Administrator -> System: Fill in the ban form\n(reason and ban duration)
@@ -397,6 +396,14 @@ Administrator -> System: Click "Confirm"
 System -> System: Validate user data
 System -> System: Ban user
 System -> Administrator: Confirm user has been banned
+
+@enduml
+
+@startuml
+
+actor User
+control System
+
 System -> User: Notify about the ban
 
 @enduml
@@ -413,7 +420,7 @@ System -> User: Notify about the ban
 @startuml
 
 actor Administrator
-actor System
+control System
 
 Administrator -> System: Select blocked user
 Administrator -> System: Click "Unban User"
@@ -437,7 +444,7 @@ System -> User: Notify about unban
 @startuml
 
 actor Administrator
-actor System
+control System
 
 Administrator -> System: Log in to the system
 Administrator -> System: Select "Edit System Settings"
