@@ -341,3 +341,28 @@ System -> Manager: Board deleted
 | **РЕЗУЛЬТАТ**     | Видалена дошка |
 | **ВИКЛЮЧНІ СИТУАЦІЇ** | - **DeleteBoard_NoRights_EXC** – менеджер не має прав на видалення обраної дошки <br> - **DeleteBoard_InvalidName_EXC** – менеджер вказав ім'я дошки, що не збігається з реальним <br> - **DeleteBoard_CancelButton_EXC** – менеджер натиснув кнопку "Відміна" |
 | **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Менеджер переходить у розділ "Дошки" та обирає потрібну для видалення дошку. <br> 2. Менеджер натискає кнопку "Видалити дошку". <br> 3. Система перевіряє права менеджера на видалення обраної дошки (**можлива DeleteBoard_NoRights_EXC**). <br> 4. Система відкриває форму підтвердження видалення дошки. <br> 5. Менеджер вводить назву дошки для підтвердження процесу видалення (**можлива DeleteBoard_InvalidName_EXC**). <br> 6. Менеджер натискає кнопку "Видалити дошку" (**можлива DeleteBoard_CancelButton_EXC**). <br> 7. Система видаляє дошку з проєкту. |
+
+@startuml
+
+actor Admin
+actor System
+
+Admin -> System: Select project to block
+Admin -> System: Click "Block Project"
+System -> System: Open block project form
+Admin -> System: Fill block reason and duration
+Admin -> System: Click "Confirm"
+System -> System: Validate project (BlockProject_ProjectHasBeenRemoved_EXC, BlockProject_ProjectHasBeenBlocked_EXC)
+System -> System: Block project
+System -> Admin: Project blocked
+
+@enduml
+
+| **ID**             | BlockProject |
+|--------------------|-------------|
+| **НАЗВА**         | Заблокувати проєкт |
+| **УЧАСНИКИ**      | Адміністратор, система |
+| **ПЕРЕДУМОВИ**    | - Адміністратор авторизований <br> - Система містить дані про проєкт <br> - Проєкт порушує умови використання системи |
+| **РЕЗУЛЬТАТ**     | Заблокований проєкт |
+| **ВИКЛЮЧНІ СИТУАЦІЇ** | - **BlockProject_ProjectHasBeenRemoved_EXC** – проєкт видалено з системи <br> - **BlockProject_ProjectHasBeenBlocked_EXC** – проєкт вже заблоковано <br> - **BlockProject_CancelButton_EXC** – адміністратор натиснув кнопку "Відміна" |
+| **ОСНОВНИЙ СЦЕНАРІЙ** | 1. Адміністратор переходить у розділ "Проєкти" та вибирає потрібний для блокування проєкт. <br> 2. Адміністратор натискає кнопку "Заблокувати проєкт". <br> 3. Система відкриває форму із параметрами блокування проєкту. <br> 4. Адміністратор заповнює форму, вказуючи причину та термін дії блокування. <br> 5. Адміністратор натискає кнопку "Підтвердити" (**можлива BlockProject_CancelButton_EXC**). <br> 6. Система перевіряє валідність обраного адміністратором проєкту (**можливі BlockProject_ProjectHasBeenRemoved_EXC, BlockProject_ProjectHasBeenBlocked_EXC**). <br> 7. Система здійснює операцію блокування й повідомляє менеджера цього проєкту та адміністратора про заблокований проєкт. |
