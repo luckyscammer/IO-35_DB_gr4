@@ -53,16 +53,16 @@ U -u-> (Delete Project)
 
 actor Administrator as A
 
-A --> (Delete User)
-A --> (Edit User)
-A --> (Edit Project)
-A --> (Delete Project)
-A --> (Add User To Project)
-A --> (Block Project)
-A --> (Unblock Project)
-A --> (Ban User)
-A --> (Unban User)
-A --> (Edit System Settings)
+A -d-> (Delete User)
+A -d-> (Edit User)
+A -u-> (Edit Project)
+A -u-> (Delete Project)
+A -u-> (Add User To Project)
+A -r-> (Block Project)
+A -u-> (Unblock Project)
+A -d-> (Ban User)
+A -d-> (Unban User)
+A -l-> (Edit System Settings)
 
 @enduml
 
