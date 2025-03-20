@@ -428,6 +428,14 @@ Administrator -> System: Click "Confirm"
 System -> System: Validate user data
 System -> System: Unban user
 System -> Administrator: Confirm user has been unbanned
+
+@enduml
+
+@startuml
+
+actor User
+control System
+
 System -> User: Notify about unban
 
 @enduml
