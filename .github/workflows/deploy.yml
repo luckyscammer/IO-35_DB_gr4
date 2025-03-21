@@ -28,8 +28,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Clean build directory
+        run: rm -rf docs/.vitepress/dist
+
       - name: Build VitePress site
         run: npm run docs:build
+
+      - name: List build directory contents
+        run: ls -la docs/.vitepress/dist
 
       - name: Deploy to GitHub Pages
         run: |
