@@ -24,7 +24,7 @@ export default defineConfig({
       { text: '🏠 Початок', link: '/' },
       { text: '📄 Документація', link: '/intro/README' },
     ],
-
+    outline: [1, 4],
     sidebar: [
       {
         items: [
