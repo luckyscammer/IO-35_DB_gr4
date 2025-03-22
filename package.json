@@ -20,6 +20,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
+    "vite-plugin-pwa": "^0.21.2",
     "vitepress": "^1.6.3"
   }
 }

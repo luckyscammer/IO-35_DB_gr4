@@ -3,6 +3,7 @@ import markdownKatex from 'markdown-it-katex'
 import markdownPlantuml from 'markdown-it-plantuml'
 import markdownAdmonition from 'markdown-it-admonition'
 import markdownTaskLists from 'markdown-it-task-lists'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
   title: 'PLIFFDAX',
@@ -85,5 +86,36 @@ export default defineConfig({
       md.use(markdownAdmonition)
       md.use(markdownTaskLists)
     }
+  },
+
+  vite: {
+    plugins: [
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['project-icon.png'],
+        manifest: {
+          name: 'PLIFFDAX',
+          short_name: 'PLIFFDAX',
+          description: 'Лабораторні роботи з дисципліни "Організація баз даних"',
+          theme_color: '#ffffff',
+          icons: [
+            {
+              src: '/project-icon.png',
+              sizes: '192x192',
+              type: 'image/png'
+            },
+            {
+              src: '/project-icon.png',
+              sizes: '512x512',
+              type: 'image/png'
+            }
+          ]
+        },
+        workbox: {
+          skipWaiting: true,
+          clientsClaim: true,
+        },
+      })
+    ]
   }
 })
