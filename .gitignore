@@ -110,3 +110,4 @@ dist
 /docs/.vitepress/dist/
 /docs/.vitepress/cache/
 /.idea/
+/docs/.vitepress/cache/deps/
