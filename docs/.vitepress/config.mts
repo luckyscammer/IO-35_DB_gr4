@@ -15,16 +15,18 @@ export default defineConfig({
     ['link', { rel: 'icon', href: './project-icon.png' }],
   ],
 
-  search: {
-    provider: 'local'
-  },
-
   themeConfig: {
+    outline: [1, 4],
+
     nav: [
       { text: '🏠 Початок', link: '/' },
       { text: '📄 Документація', link: '/intro/README' },
     ],
-    outline: [1, 4],
+
+    search: {
+      provider: 'local'
+    },
+
     sidebar: [
       {
         items: [
