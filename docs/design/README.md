@@ -157,4 +157,165 @@ Tag "1..1" -u- "0..*" TasksTag
 
 ---
 
+## 🧩 ER-модель
 
+_Відображає структуру таблиць, типи даних і зв’язки між сутностями на логічному рівні._
+
+> 💡 Візуальна версія згенерована на основі попередньої діаграми бізнес-об'єктів. Таблиці згруповані у домени: користувачі, права доступу, проєкти, задачі.
+
+@startuml
+!theme plain
+
+' ============ User Management ============
+package "UserManagement" {
+entity User {
+*id : UUID
+--
+name : VARCHAR(64)
+email : VARCHAR(128)
+password : VARCHAR(64)
+avatar : VARCHAR(128)
+status : VARCHAR(32)
+}
+
+entity Member {
+*id : UUID
+--
+user_id : UUID
+project_id : UUID
+role_id : UUID
+}
+
+entity Ban {
+*id : UUID
+--
+user_id : UUID
+reason : TEXT
+untilDate : DATETIME
+}
+
+entity Settings {
+*id : UUID
+--
+user_id : UUID
+key : VARCHAR(64)
+value : TEXT
+}
+}
+
+' ============ Permissions =============
+package "PermissionManagement" {
+entity Role {
+*id : UUID
+--
+name : VARCHAR(32)
+description : TEXT
+}
+
+entity Grant {
+*role_id : UUID
+*permission_id : UUID
+}
+
+entity Permission {
+*id : UUID
+--
+name : VARCHAR(64)
+}
+}
+
+' ============ Project Management ============
+package "ProjectManagement" {
+entity Project {
+*id : UUID
+--
+name : VARCHAR(64)
+description : TEXT
+creationDate : DATETIME
+status : VARCHAR(32)
+}
+
+entity Board {
+*id : UUID
+--
+name : VARCHAR(64)
+project_id : UUID
+}
+
+entity Block {
+*id : UUID
+--
+project_id : UUID
+reason : TEXT
+untilDate : DATETIME
+}
+}
+
+' ============ Task Management =============
+package "TaskManagement" {
+entity Task {
+*id : UUID
+--
+name : VARCHAR(64)
+description : TEXT
+status : VARCHAR(32)
+startDate : DATE
+dueDate : DATE
+board_id : UUID
+}
+
+entity TaskComment {
+*id : UUID
+--
+task_id : UUID
+author_id : UUID
+content : TEXT
+creationDate : DATETIME
+}
+
+entity Assignee {
+*id : UUID
+--
+task_id : UUID
+user_id : UUID
+}
+
+entity Tag {
+*id : UUID
+--
+name : VARCHAR(32)
+}
+
+entity TasksTag {
+*task_id : UUID
+*tag_id : UUID
+}
+}
+
+' ============ Зв’язки ============
+User ||--o{ Member
+User ||--o{ Ban
+User ||--o{ Settings
+User ||--o{ TaskComment
+User ||--o{ Assignee
+
+Member }o--|| Project
+Member }o--|| Role
+
+Grant }o--|| Role
+Grant }o--|| Permission
+
+Project ||--o{ Board
+Project ||--o{ Block
+
+Board ||--o{ Task
+
+Task ||--o{ TaskComment
+Task ||--o{ Assignee
+Task ||--o{ TasksTag
+
+Tag ||--o{ TasksTag
+
+@enduml
+
+---
