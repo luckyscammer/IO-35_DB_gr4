@@ -10,13 +10,17 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
+    "start": "node src/app.js",
     "publish": "publish.sh"
   },
   "dependencies": {
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "markdown-it-admonition": "^1.0.4",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-plantuml": "^1.4.1",
     "markdown-it-task-lists": "^2.1.1",
+    "mysql2": "^3.14.1",
     "vue": "^3.3.4"
   },
   "devDependencies": {

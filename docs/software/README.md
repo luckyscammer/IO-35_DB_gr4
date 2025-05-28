@@ -2,7 +2,7 @@
 
 ## 📝 SQL-скрипт для створення початкового наповнення бази даних
 
-_init.sql_
+### init.sql
 
 ```sql
 CREATE TABLE `User` (
@@ -131,7 +131,7 @@ ALTER TABLE `TasksTag` ADD FOREIGN KEY (`task_id`) REFERENCES `Task`(`id`) ON DE
 ALTER TABLE `TasksTag` ADD FOREIGN KEY (`tag_id`) REFERENCES `Tag`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 ```
 
-_seed.sql_
+### seed.sql
 
 ```sql
 BEGIN;
@@ -247,5 +247,158 @@ INSERT INTO `Settings` (`user_id`, `key`, `value`) VALUES
 COMMIT;
 ```
 
-## 📝 RESTfull сервіс для управління даними
+## 🚀 RESTfull сервіс (JavaScript + Express.js)
 
+### .env
+
+```text
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=PLIFFDAX
+```
+
+> 💡 **Файл для зберігання конфіденційних налаштувань (логін/пароль до бази даних, імʼя БД, хост тощо).** Завдяки цьому твій код не містить паролів у відкритому доступі, і легко змінювати налаштування між різними середовищами (dev/prod).
+
+### src/app.js
+
+```js
+const express = require('express');
+const userRoutes = require('./routes/userRoutes');
+
+const app = express();
+
+app.use(express.json());
+
+app.use('/users', userRoutes);
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000');
+});
+```
+
+> 💡 **Головний файл додатку.** Тут відбувається підключення Express, підключення роутів, налаштування парсерів JSON і запуск сервера на певному порту.
+
+### src/db.js
+
+```js
+const mysql = require('mysql2/promise');
+require('dotenv').config();
+
+const pool = mysql.createPool({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  waitForConnections: true,
+  connectionLimit: 10,
+});
+
+module.exports = pool;
+```
+
+> 💡 **Модуль для підключення до бази даних.** Імпортує налаштування з `.env` і створює пул зʼєднань із MySQL, який можна використовувати у всіх інших модулях для виконання SQL-запитів.
+
+### src/models/userModel.js
+
+```js
+const db = require('../db');
+
+exports.create = async (name, email, password, avatar, status) => {
+  await db.query(
+    'INSERT INTO User (name, email, password, avatar, status) VALUES (?, ?, ?, ?, ?)',
+    [name, email, password, avatar || null, status || null]
+  );
+};
+
+exports.findAll = async () => {
+  const [rows] = await db.query('SELECT id, name, email, avatar, status FROM User');
+  return rows;
+};
+
+exports.findById = async (id) => {
+  const [rows] = await db.query('SELECT * FROM User WHERE id = ?', [id]);
+  return rows[0];
+};
+
+exports.update = async (id, fields) => {
+  const set = Object.keys(fields).map(key => `${key} = ?`).join(', ');
+  const values = [...Object.values(fields), id];
+  await db.query(`UPDATE User SET ${set} WHERE id = ?`, values);
+};
+
+exports.delete = async (id) => {
+  await db.query('DELETE FROM User WHERE id = ?', [id]);
+};
+```
+
+> 💡 **Модель роботи з даними користувачів (User).** Тут описуються функції для звернення до БД: додавання, отримання, редагування, видалення користувачів. Вся взаємодія з таблицею `User` відбувається саме тут.
+
+### src/controllers/userController.js
+
+```js
+const userModel = require('../models/userModel');
+
+exports.create = async (req, res) => {
+  const { name, email, password, avatar, status } = req.body;
+  if (!name || !email || !password) {
+    return res.status(400).json({ error: 'Заповніть всі обовʼязкові поля (name, email, password)' });
+  }
+  await userModel.create(name, email, password, avatar, status);
+  res.status(201).json({ message: 'Користувача додано' });
+};
+
+exports.getAll = async (req, res) => {
+  const users = await userModel.findAll();
+  res.json(users);
+};
+
+exports.edit = async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, avatar, status } = req.body;
+  const fields = {};
+  if (name) fields.name = name;
+  if (email) fields.email = email;
+  if (password) fields.password = password;
+  if (avatar) fields.avatar = avatar;
+  if (status) fields.status = status;
+  if (!Object.keys(fields).length) {
+    return res.status(400).json({ error: 'Немає даних для оновлення' });
+  }
+  await userModel.update(id, fields);
+  res.json({ message: 'Користувача оновлено' });
+};
+
+exports.delete = async (req, res) => {
+  const { id } = req.params;
+  await userModel.delete(id);
+  res.json({ message: 'Користувача видалено' });
+};
+
+exports.getOne = async (req, res) => {
+  const user = await userModel.findById(req.params.id);
+  if (!user) return res.status(404).json({ error: 'UserNotFoundException' });
+  res.json(user);
+};
+```
+
+> 💡 **Контролер для обробки HTTP-запитів, повʼязаних із користувачами.** Приймає дані з запиту, викликає відповідні функції моделі (`userModel`), обробляє відповіді й формує відповідь для клієнта (наприклад, успіх або помилку).
+
+### src/routes/userRoutes.js
+
+```js
+const express = require('express');
+const router = express.Router();
+const userController = require('../controllers/userController');
+
+router.post('/', userController.create);
+router.get('/', userController.getAll);
+router.put('/:id', userController.edit);
+router.delete('/:id', userController.delete);
+router.get('/:id', userController.getOne);
+
+module.exports = router;
+```
+
+> 💡 **Файл, який описує маршрути (routes) для роботи з користувачами.** Тут визначаються URL-адреси для різних дій (`GET`, `POST`, `PUT`, `DELETE`), і кожен маршрут підключає відповідний метод з контролера.
+Підключається у головному `app.js`.
