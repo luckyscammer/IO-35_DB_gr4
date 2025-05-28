@@ -21,6 +21,6 @@ git commit -m 'Deploy to gh-pages'
 # git push -f git@github.com:boldak/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f https://github.com/luckyscammer/IO-35_DB_gr4 main:gh-pages
+git push -f https://github.com/Nastysska/IO-35_DB_gr4 main:gh-pages
 
 cd -
